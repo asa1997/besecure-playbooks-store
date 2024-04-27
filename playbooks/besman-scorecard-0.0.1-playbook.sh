@@ -56,27 +56,6 @@ function __besman_init() {
     fi
 }
 
-function __besman_execute() {
-    local duration
-    __besman_echo_yellow "Launching steps file"
-
-    SECONDS=0
-    . "$BESMAN_STEPS_FILE_PATH"
-    duration=$SECONDS
-
-    export EXECUTION_DURATION=$duration
-    if [[ $CRITICALITY_SCORE_RESULT == 1 ]]; then
-
-        export PLAYBOOK_EXECUTION_STATUS=failure
-        return 1
-
-    else
-        export PLAYBOOK_EXECUTION_STATUS=success
-        return 0
-    fi
-
-}
-
 function __besman_prepare() {
     __besman_echo_white "preparing data"
     EXECUTION_TIMESTAMP=$(date)
