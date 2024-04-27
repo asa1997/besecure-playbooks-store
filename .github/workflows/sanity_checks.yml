@@ -57,20 +57,16 @@ jobs:
         run: |
           function_flag=false
           for file in $(git ls-files | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$'); do
-            echo $file
             # Check if the file ends with "-playbook.sh"
             for f in ${{ env.PLAYBOOK_FUNCTIONS }}; do
-              echo function=$f
-              echo function_flag=$function_flag
+
               if ! grep -q -w "function $f" $file
               then
-                echo "inside if"
-                echo "Missing function $f in $file"
+                echo -e "\e[31mMissing function $f in $file\e[0m"
                 function_flag=true
               fi
             done
           done
-          echo function_flag=$function_flag
           if [[ $function_flag == true ]] 
           then
             exit 1
