@@ -47,7 +47,7 @@ jobs:
             echo "Do something with this ${added_modified_file}."
             MODIFIED_FILES+=("$added_modified_file")
           done
-          echo "MODIFIED_FILES" >> $GITHUB_ENV
+          echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
       - name: Print files
         run: echo $MODIFIED_FILES
       # - name: Get list of modified files
