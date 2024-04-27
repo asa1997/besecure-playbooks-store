@@ -32,13 +32,13 @@ jobs:
       
       - name: List all changed files
         env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          MODIFIED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          for file in ${ALL_CHANGED_FILES}; do
+          for file in ${MODIFIED_FILES}; do
             echo "$file was changed"
           done
       - name: Print files
-        run: echo $ALL_CHANGED_FILES[@]
+        run: echo $MODIFIED_FILES[@]
       # - name: Get list of modified files
       #   id: get_files
       #   run: |
