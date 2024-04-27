@@ -62,7 +62,7 @@ jobs:
 
               if ! grep -q -w "function $f" $file
               then
-                echo -e "\e[31mMissing function $f in $file\e[0m"
+                echo -e "\e[31mMissing function \e[33m$f\e[31m in $file\e[0m"
                 function_flag=true
               fi
             done
