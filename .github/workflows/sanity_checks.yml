@@ -29,14 +29,23 @@ jobs:
       - name: get list
         run: ls -R .github
 
-      - name: Get the list of modified files
-        run: |
-          git fetch
-          file=$(git diff --name-only HEAD..${{ github.event.pull_request.head.ref}})
-          echo FILES=$(echo $file | tr '\n' ' ') >> $GITHUB_ENV
+      # - name: Get the list of modified files
+      #   run: |
+      #     git fetch
+      #     file=$(git diff --name-only HEAD..${{ github.event.pull_request.head.ref}})
+      #     echo FILES=$(echo $file | tr '\n' ' ') >> $GITHUB_ENV
 
-      - name: Print files
-        run: echo $FILES
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - run: |
+          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+          for added_modified_file in "${added_modified_files[@]}"; do
+            echo "Do something with this ${added_modified_file}."
+          done
+      # - name: Print files
+      #   run: echo $FILES
       # - name: Get list of modified files
       #   id: get_files
       #   run: |
