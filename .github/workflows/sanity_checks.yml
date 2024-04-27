@@ -24,7 +24,7 @@ jobs:
       #   run: git fetch
 
       - name: branch name
-        run: git branch | grep "*"
+        run: git branch -a | grep "*"
 
       - name: get list
         run: ls -R .github
