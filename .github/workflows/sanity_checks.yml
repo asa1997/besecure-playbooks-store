@@ -43,8 +43,9 @@ jobs:
       
       - name: Get the list of assessment tools
         run: |
-          tools=$(cat .github/scripts/assessment_tools.txt)
-          echo "ASSESSMENT_TOOLS=$(echo "$tools" | tr '\n' '|')" >> $GITHUB_ENV
+          tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
+          tools=${tools%|}
+          echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
 
       - name: Print the list of required functions
         run: echo "Required functions= ${{ env.PLAYBOOK_FUNCTIONS }}"
@@ -55,14 +56,22 @@ jobs:
       - name: Check for required functions
         run: |
           function_flag=false
-          for file in $(git ls-files | grep -E ${{ env.ASSESSMENT_TOOLS }} | grep '\-playbook\.sh$'); do
+          for file in $(git ls-files | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$'); do
+            echo $file
             # Check if the file ends with "-playbook.sh"
             for f in ${{ env.PLAYBOOK_FUNCTIONS }}; do
+              echo function=$f
+              echo function_flag=$function_flag
               if ! grep -q -w "function $f" $file
               then
+                echo "inside if"
                 echo "Missing function $f in $file"
                 function_flag=true
               fi
             done
           done
-          [[ $function_flag == true ]] && exit 1
+          echo function_flag=$function_flag
+          if [[ $function_flag == true ]] 
+          then
+            exit 1
+          fi
