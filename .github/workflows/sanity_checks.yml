@@ -5,35 +5,13 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  check_files:
-    name: Check playbook function name 
+  Required_functions:
+    name: Checking for required functions
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        # with:
-        #   ref: ${{ github.event.pull_request.head.ref }}  # Checkout the code from the source branch of the pull request
-
-      # - name: Install required packages
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y grep
-      
-      # - name: perform fetch
-      #   run: git fetch
-
-      # - name: branch name
-      #   run: git branch -a | grep "*"
-
-      # - name: get list
-      #   run: ls -R .github
-
-      # - name: Get the list of modified files
-      #   run: |
-      #     git fetch
-      #     file=$(git diff --name-only HEAD..${{ github.event.pull_request.head.ref}})
-      #     echo FILES=$(echo $file | tr '\n' ' ') >> $GITHUB_ENV
 
       - id: files
         uses: jitterbit/get-changed-files@v1
@@ -54,7 +32,9 @@ jobs:
       #   id: get_files
       #   run: |
       #     echo "::set-output name=files::$(git diff --name-only ${{ github.event.pull_request.base.ref }}...${{ github.event.pull_request.head.ref }})"
-      
+      - name: Get output
+        run: echo ${{ steps.files.outputs }}
+        
       - name: Get the list of required functions
         id: get_functions
         run: |
@@ -72,7 +52,7 @@ jobs:
         run: echo "Required functions= ${{ env.PLAYBOOK_FUNCTIONS }}"
 
       - name: Print the list of required tools
-        run: echo "Required functions= ${{ env.ASSESSMENT_TOOLS }}"
+        run: echo "Required tools= ${{ env.ASSESSMENT_TOOLS }}"
 
       - name: Check for required functions
         run: |
@@ -92,3 +72,83 @@ jobs:
           then
             exit 1
           fi
+
+  # Check_naming_convention:
+  #   name: Check file naming conention
+  #   runs-on: ubuntu-latest
+    
+  #   steps:
+  #     - id: files
+  #       uses: jitterbit/get-changed-files@v1
+  #       with:
+  #         format: 'csv'
+  #       continue-on-error: true
+  #     - run: |
+  #         mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+  #         MODIFIED_FILES=()
+  #         for added_modified_file in "${added_modified_files[@]}"; do
+  #           echo "Do something with this ${added_modified_file}."
+  #           MODIFIED_FILES+=("$added_modified_file")
+  #         done
+  #         echo "MODIFIED_FILES=${MODIFIED_FILES[@]}" >> $GITHUB_ENV
+  #     - name: Print files
+  #       run: echo $MODIFIED_FILES
+      
+  #     - name: Get the list of assessment tools
+  #       run: |
+  #         tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
+  #         tools=${tools%|}
+  #         echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
+      
+  #     - name: Print the list of assessment tools
+  #       run: echo "Required tools= ${{ env.ASSESSMENT_TOOLS }}"
+
+  #     - name: check for playbook files
+  #       run: |
+  #         check_flag=false
+  #         for file in $(echo ${{ env.MODIFIED_FILES }} | grep '\-playbook\.sh$');
+  #         do
+  #           prefix=$(echo $file | cut -d "-" -f 1)
+  #           tool_name=$(echo $file | cut -d "-" -f 2)
+  #           version=$(echo $file | cut -d "-" -f 3)
+  #           if [[ "$prefix" != "besman" ]]
+  #           then
+  #             echo -e "\e[31mMissing prefix \e[33mbesman\e[31m in \e[33m$file\e[0m"
+  #           fi
+            
+  #           if ! echo "$tool_name" | grep -E "${{ env.ASSESSMENT_TOOLS }}"
+  #           then
+  #             echo -e "\e[31mMissing tool name in \e[33m$file\e[0m"
+  #           fi
+            
+  #           if ! echo "$version" | grep -E '\b[0-9]+\.[0-9]+\.[0-9]+\b'"
+  #           then
+  #             echo -e "\e[31mMissing or Incorrect version in \e[33m$file\e[0m"
+  #           fi
+            
+  #         done
+
+  #     - name: check for steps files
+  #       run: |
+  #         check_flag=false
+  #         for file in $(echo "${{ env.MODIFIED_FILES }}" | grep '\-steps\.[^.]*$');
+  #         do
+  #           prefix=$(echo $file | cut -d "-" -f 1)
+  #           tool_name=$(echo $file | cut -d "-" -f 2)
+  #           version=$(echo $file | cut -d "-" -f 3)
+  #           if [[ "$prefix" != "besman" ]]
+  #           then
+  #             echo -e "\e[31mMissing prefix \e[33mbesman\e[31m in \e[33m$file\e[0m"
+  #           fi
+            
+  #           if ! echo "$tool_name" | grep -E "${{ env.ASSESSMENT_TOOLS }}"
+  #           then
+  #             echo -e "\e[31mMissing tool name in \e[33m$file\e[0m"
+  #           fi
+            
+  #           if ! echo "$version" | grep -E '\b[0-9]+\.[0-9]+\.[0-9]+\b'"
+  #           then
+  #             echo -e "\e[31mMissing or Incorrect version in \e[33m$file\e[0m"
+  #           fi
+            
+  #         done
