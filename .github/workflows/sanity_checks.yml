@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}  # Checkout the code from the source branch of the pull request
+        # with:
+        #   ref: ${{ github.event.pull_request.head.ref }}  # Checkout the code from the source branch of the pull request
 
       # - name: Install required packages
       #   run: |
@@ -29,6 +29,14 @@ jobs:
       - name: get list
         run: ls -R .github
 
+      - name: Get the list of modified files
+        run: |
+          git fetch
+          file=$(git diff --name-only HEAD..${{ github.event.pull_request.head.ref}})
+          echo FILES=$(echo $file | tr '\n' ' ') >> $GITHUB_ENV
+
+      - name: Print files
+        run: echo $FILES
       # - name: Get list of modified files
       #   id: get_files
       #   run: |
