@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # Define the required functions
-required_functions=$(cat playbook_functions.txt)
+required_functions=(init execute prepare publish cleanup launch)
+
+branch_name=$BRANCH_NAME
 
 # Get the list of modified or added files in the pull request
-modified_files=$(git diff --name-only origin/main...HEAD)
+modified_files=$( git diff --name-only dev..$branch_name | grep -e "playbook.sh")
 
 # Flag to track if all required functions are present
 all_functions_present=true
