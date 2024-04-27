@@ -42,9 +42,12 @@ jobs:
         continue-on-error: true
       - run: |
           mapfile -d ' ' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+          MODIFIED_FILES=()
           for added_modified_file in "${added_modified_files[@]}"; do
             echo "Do something with this ${added_modified_file}."
+            MODIFIED_FILES+=("$added_modified_file")
           done
+          echo ${MODIFIED_FILES[@]}
       # - name: Print files
       #   run: echo $FILES
       # - name: Get list of modified files
