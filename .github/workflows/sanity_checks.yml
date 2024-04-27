@@ -13,21 +13,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'csv'
-        continue-on-error: true
-      - run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
-          MODIFIED_FILES=()
-          for added_modified_file in "${added_modified_files[@]}"; do
-            echo "Do something with this ${added_modified_file}."
-            MODIFIED_FILES+=("$added_modified_file")
+      # - id: files
+      #   uses: jitterbit/get-changed-files@v1
+      #   with:
+      #     format: 'csv'
+      #   continue-on-error: true
+      # - run: |
+      #     mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+      #     MODIFIED_FILES=()
+      #     for added_modified_file in "${added_modified_files[@]}"; do
+      #       echo "Do something with this ${added_modified_file}."
+      #       MODIFIED_FILES+=("$added_modified_file")
+      #     done
+      #     echo "MODIFIED_FILES=${MODIFIED_FILES[@]}" >> $GITHUB_ENV
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+      
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
           done
-          echo "MODIFIED_FILES=${MODIFIED_FILES[@]}" >> $GITHUB_ENV
       - name: Print files
-        run: echo $MODIFIED_FILES
+        run: echo $ALL_CHANGED_FILES[@]
       # - name: Get list of modified files
       #   id: get_files
       #   run: |
