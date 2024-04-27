@@ -6,7 +6,7 @@ on:
 
 jobs:
   check_files:
-    name: Check function name 
+    name: Check playbook function name 
     runs-on: ubuntu-latest
 
     steps:
@@ -23,11 +23,11 @@ jobs:
       # - name: perform fetch
       #   run: git fetch
 
-      - name: branch name
-        run: git branch -a | grep "*"
+      # - name: branch name
+      #   run: git branch -a | grep "*"
 
-      - name: get list
-        run: ls -R .github
+      # - name: get list
+      #   run: ls -R .github
 
       # - name: Get the list of modified files
       #   run: |
