@@ -65,6 +65,15 @@ function __besman_prepare() {
 
 }
 
+function __besman_execute() {
+    __besman_echo_white "preparing data"
+    EXECUTION_TIMESTAMP=$(date)
+    export EXECUTION_TIMESTAMP
+
+    __besman_generate_osar
+
+}
+
 function __besman_publish() {
     __besman_echo_yellow "Pushing to datastores"
     # push code to remote datastore
