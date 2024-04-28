@@ -35,27 +35,26 @@ jobs:
           tools=${tools%|}
           echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
 
-      
-      - name: dir
-        run: pwd
-      
-      # - name: Check for steps file
-      #   run: 
-      #     check_flag=false
-      #     for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$');
-      #     do
-      #       toolname=$(echo "$file" | cut -d "-" -f 2)
-      #       version=$(echo "$file" | cut -d "-" -f 1)
-      #       if ! echo "${{ env.MODIFIED_FILES }}" | grep -q "besman-$toolname-$version-steps"
-      #       then
-      #         flag=true
-      #       fi
-      #       if ! ls -R . | grep -q "besman-$toolname-$version-steps"
-      #       then
-      #         flag=true
-      #       fi
+      - name: Check if steps file present
+        run: |
+          steps_flag=false
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$'); do
+            tool_name=$(echo "$file" | cut -d "-" -f 2)
+            version=$(echo "$file" | cut -d "-" -f 3)
+            if ! echo "${{ env.MODIFIED_FILES }}" | grep -q "besman-$tool_name-$version-steps"
+            then
+              steps_flag=true
+            elif ! ls -R . | grep -q "besman-$tool_name-$version-steps"
+            then
+              steps_flag=true
+            fi
+            if [[ "steps_flag" == "true" ]]
+            then
+              echo "Could not find steps file for besman-$tool_name-$version-playbook.sh"
+              exit 1
+            fi
+          done
 
-      #     done
 
   # Uncomment below job
   Required_functions:
