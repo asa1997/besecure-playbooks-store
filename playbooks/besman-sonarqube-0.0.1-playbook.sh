@@ -96,6 +96,15 @@ function __besman_publish() {
     git push origin main
 }
 
+function __besman_cleanup() {
+    __besman_echo_yellow "Pushing to datastores"
+    # push code to remote datastore
+    cd "$BESMAN_ASSESSMENT_DATASTORE_DIR"
+
+    git add "$DETAILED_REPORT_PATH" "$OSAR_PATH"
+    git commit -m "Added osar and detailed report"
+    git push origin main
+}
 
 
 # function launch
