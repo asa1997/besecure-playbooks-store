@@ -38,7 +38,7 @@ jobs:
 
       - name: Check if steps file present
         run: |
-          souce ./.github/scripts/file_check.sh "${{ env.MODIFIED_FILES }}" "${{ env.ASSESSMENT_TOOLS }}"
+          source ./.github/scripts/file_check.sh "${{ env.MODIFIED_FILES }}" "${{ env.ASSESSMENT_TOOLS }}"
 
 
   Required_functions:
