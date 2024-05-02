@@ -51,7 +51,7 @@ jobs:
             fi
             if [[ "$steps_flag" == "true" ]]
             then
-              echo -e "\e[31m"Could not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
+              echo -e "\e[31mCould not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
             fi
           done
           if [[ "$steps_flag" == "true" ]]
