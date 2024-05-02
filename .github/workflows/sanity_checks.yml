@@ -76,6 +76,9 @@ jobs:
           tools=${tools%|}
           echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
       
+      - name: Print the list of required tools
+        run: echo "Required tools= ${{ env.ASSESSMENT_TOOLS }}"
+
       - name: Check playbook naming convention
         run: |
           file_flag=false
@@ -114,7 +117,7 @@ jobs:
       - name: Check steps file naming convention
         run: |
           file_flag=false
-          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -v -E "\-playbook\.sh$"); do  
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -E "\-steps.*$"); do  
             prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
             tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
