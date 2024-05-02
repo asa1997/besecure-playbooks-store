@@ -49,7 +49,7 @@ jobs:
             fi
           done
           echo "steps_flag=$steps_flag"
-          if [[ "$steps_flag" == "true" ]]; then
+          if [[ "$steps_flag" == "false" ]]; then
             exit 1
           fi
   Required_functions:
