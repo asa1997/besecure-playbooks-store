@@ -80,11 +80,11 @@ jobs:
         run: |
           file_flag=false
           for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -e ".*playbook.sh"); do  
-            prefix=$(echo "$file" | cut -d "-" -f 1)
-            tool=$(echo "$file" | cut -d "-" -f 2)
-            version=$(echo "$file" | cut -d "-" -f 3)
-            suffix=$(echo "$file" | cut -d "-" -f 4)
-            extension=$(echo "$file" | cut -d "." -f 2)
+            prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
+            tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
+            version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
+            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
+            extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
             if [[ "$prefix" != "besman" ]];
             then
               echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
@@ -117,11 +117,11 @@ jobs:
         run: |
             file_flag=false
             for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -e ".*steps*"); do  
-              prefix=$(echo "$file" | cut -d "-" -f 1)
-              tool=$(echo "$file" | cut -d "-" -f 2)
-              version=$(echo "$file" | cut -d "-" -f 3)
-              suffix=$(echo "$file" | cut -d "-" -f 4)
-              extension=$(echo "$file" | cut -d "." -f 2)
+              prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
+              tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
+              version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
+              suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
+              extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
               if [[ "$prefix" != "besman" ]];
               then
                 echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
