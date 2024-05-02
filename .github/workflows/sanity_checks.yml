@@ -39,7 +39,7 @@ jobs:
       - name: Check if steps file present
         run: |
           steps_flag=true
-          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -q -E "${{ env.ASSESSMENT_TOOLS }}" | grep -q ".*playbook.sh"); do
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep ".*playbook.sh"); do
             tool_name=$(echo "$file" | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "-" -f 3)
             if ! (echo "${{ env.MODIFIED_FILES }}" | grep "besman-$tool_name-$version-steps" && ls -R . | grep "besman-$tool_name-$version-steps"); then
