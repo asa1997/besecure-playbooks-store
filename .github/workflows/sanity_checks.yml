@@ -79,7 +79,8 @@ jobs:
       - name: Check playbook naming convention
         run: |
           file_flag=false
-          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -e "*playbook.sh"); do  
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" |  grep -E "\-playbook\.sh$"); do  
+            echo "file=$file"
             prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
             tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
