@@ -47,9 +47,11 @@ jobs:
             version=$(echo "$file" | cut -d "-" -f 3)
             if ! echo "${{ env.MODIFIED_FILES }}" | grep -q "besman-$tool_name-$version-steps"
             then
+              echo "inside if"
               steps_flag=true
             elif ! ls -R . | grep -q "besman-$tool_name-$version-steps"
             then
+              echo "inside else"
               steps_flag=true
             fi
             if [[ "steps_flag" == "true" ]]
