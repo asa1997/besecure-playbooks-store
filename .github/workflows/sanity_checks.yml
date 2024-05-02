@@ -107,7 +107,7 @@ jobs:
       - name: Check for required functions
         run: |
           function_flag=false
-          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$'); do
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook.sh$'); do
             # Check if the file ends with "-playbook.sh"
             echo "file=$file"
             for f in ${{ env.PLAYBOOK_FUNCTIONS }}; do
