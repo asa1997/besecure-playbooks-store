@@ -85,71 +85,64 @@ jobs:
             version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
             suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
             extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
-            if [[ "$prefix" != "besman" ]];
-            then
+            if [[ "$prefix" != "besman" ]]; then
               echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
               file_flag=true
             fi
-            if ! (echo $tool | grep -E "${{ env.ASSESSMENT_TOOLS }}")
-            then
+            if ! (echo $tool | grep -E "${{ env.ASSESSMENT_TOOLS }}"); then
               echo -e "\e[31mUnknown tool \e[33m$tool\e[31m in \e[33m$file\e[0m"
               file_flag=true
             fi
-            if [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]];then
-              echo -e "\e[31mIncorrect version format[0m"
+            if ! [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo -e "\e[31mIncorrect version format in \e[33m$file\e[0m"
               file_flag=true
             fi
-            if [[ "$suffix" != "playbook" ]];
-            then
+            if [[ "$suffix" != "playbook" ]]; then
               echo -e "\e[31mMissing playbook suffix in \e[33m$file\e[0m"
               file_flag=true
             fi
-            if ! (echo $extension | grep "sh" )
-            then
-              echo -e "\e[31mIncorrect extension[0m"
+            if ! (echo $extension | grep -q -e "sh"); then
+              echo -e "\e[31mIncorrect extension in \e[33m$file\e[0m"
               file_flag=true
             fi
           done
           if [[ "$file_flag" == "true" ]]; then
             exit 1
           fi
+
       - name: Check steps file naming convention
         run: |
-            file_flag=false
-            for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -e ".*steps*"); do  
-              prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
-              tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
-              version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
-              suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
-              extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
-              if [[ "$prefix" != "besman" ]];
-              then
-                echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
-                file_flag=true
-              fi
-              if ! (echo $tool | grep -E "${{ env.ASSESSMENT_TOOLS }}")
-              then
-                echo -e "\e[31mUnknown tool \e[33m$tool\e[31m in \e[33m$file\e[0m"
-                file_flag=true
-              fi
-              if [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]];then
-                echo -e "\e[31mIncorrect version format[0m"
-                file_flag=true
-              fi
-              if [[ "$suffix" != "steps" ]];
-              then
-                echo -e "\e[31mMissing playbook suffix in \e[33m$file\e[0m"
-                file_flag=true
-              fi
-              if ! (echo $extension | grep -e "sh" -e "md" -e "ipynb" )
-              then
-                echo -e "\e[31mIncorrect extension[0m"
-                file_flag=true
-              fi
-            done
-            if [[ "$file_flag" == "true" ]]; then
-              exit 1
+          file_flag=false
+          for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep -e ".*steps*"); do  
+            prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
+            tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
+            version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
+            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
+            extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
+            if [[ "$prefix" != "besman" ]]; then
+              echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
+              file_flag=true
             fi
+            if ! (echo $tool | grep -E "${{ env.ASSESSMENT_TOOLS }}"); then
+              echo -e "\e[31mUnknown tool \e[33m$tool\e[31m in \e[33m$file\e[0m"
+              file_flag=true
+            fi
+            if ! [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo -e "\e[31mIncorrect version format in \e[33m$file\e[0m"
+              file_flag=true
+            fi
+            if [[ "$suffix" != "steps" ]]; then
+              echo -e "\e[31mMissing steps suffix in \e[33m$file\e[0m"
+              file_flag=true
+            fi
+            if ! (echo $extension | grep -q -e "sh" -e "md" -e "ipynb"); then
+              echo -e "\e[31mIncorrect extension in \e[33m$file\e[0m"
+              file_flag=true
+            fi
+          done
+          if [[ "$file_flag" == "true" ]]; then
+            exit 1
+          fi
 
   Required_functions:
     name: Checking for required functions
