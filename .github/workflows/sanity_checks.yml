@@ -83,7 +83,7 @@ jobs:
             prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
             tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
-            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
+            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4 | cut -d "." -f 1)
             extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
             if [[ "$prefix" != "besman" ]]; then
               echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
@@ -117,7 +117,7 @@ jobs:
             prefix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 1)
             tool=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 3)
-            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4)
+            suffix=$(echo "$file" | cut -d "/" -f 2 | cut -d "-" -f 4 | cut -d "." -f 1)
             extension=$(echo "$file" | cut -d "/" -f 2 | cut -d "." -f 2)
             if [[ "$prefix" != "besman" ]]; then
               echo -e "\e[31mMissing besman prefix in \e[33m$file\e[0m"
