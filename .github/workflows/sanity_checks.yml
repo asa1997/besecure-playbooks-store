@@ -44,10 +44,12 @@ jobs:
             version=$(echo "$file" | cut -d "-" -f 3)
             if echo "${{ env.MODIFIED_FILES }}" | grep besman-$tool_name-$version-steps && ls -R . | grep besman-$tool_name-$version-steps
             then
+              echo "inside if"
               steps_flag=false
               echo -e "\e[31mCould not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
             fi
           done
+          echo "steps_flag=$steps_flag"
           if [[ "$steps_flag" == "true" ]]
           then
               exit 1
