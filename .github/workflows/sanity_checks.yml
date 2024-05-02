@@ -29,9 +29,7 @@ jobs:
       - name: Print files
         run: echo "${{ env.MODIFIED_FILES }}"
 
-      - name: Run ls
-        run: ls -R .
-      
+     
       - name: Get the list of assessment tools
         run: |
           tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
@@ -42,24 +40,24 @@ jobs:
         run: |
           steps_flag=true
           for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$'); do
-            echo "file=$file"
             tool_name=$(echo "$file" | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "-" -f 3)
             if echo "${{ env.MODIFIED_FILES }}" | grep -q "besman-$tool_name-$version-steps"
             then
-              echo "inside if"
               steps_flag=false
             elif ls -R . | grep -q "besman-$tool_name-$version-steps"
             then
-              echo "inside else"
               steps_flag=false
             fi
             if [[ "$steps_flag" == "true" ]]
             then
-              echo "Could not find steps file for besman-$tool_name-$version-playbook.sh"
-              exit 1
+              echo -e "\e[31m"Could not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
             fi
           done
+          if [[ "$steps_flag" == "true" ]]
+          then
+            exit 1
+          fi
 
 
   Required_functions:
