@@ -54,6 +54,7 @@ jobs:
   File_Name_Standard:
     name: Check for file naming convention
     runs-on: ubuntu-latest
+    needs: Required_files
 
     steps:
       - name: Checkout code
@@ -73,10 +74,6 @@ jobs:
           echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
       - name: Print files
         run: echo "${{ env.MODIFIED_FILES }}"
-      
-      - run: pwd
-
-      - run: ls $HOME
 
       - name: Get the list of assessment tools
         run: |
@@ -100,6 +97,9 @@ jobs:
   Required_functions:
     name: Checking for required functions
     runs-on: ubuntu-latest
+    needs:
+      - File_Name_Standard
+      - Required_files
 
     steps:
       - name: Checkout code
@@ -159,82 +159,4 @@ jobs:
             exit 1
           fi
 
-  # Check_naming_convention:
-  #   name: Check file naming conention
-  #   runs-on: ubuntu-latest
-    
-  #   steps:
-  #     - id: files
-  #       uses: jitterbit/get-changed-files@v1
-  #       with:
-  #         format: 'csv'
-  #       continue-on-error: true
-  #     - run: |
-  #         mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
-  #         MODIFIED_FILES=()
-  #         for added_modified_file in "${added_modified_files[@]}"; do
-  #           echo "Do something with this ${added_modified_file}."
-  #           MODIFIED_FILES+=("$added_modified_file")
-  #         done
-  #         echo "MODIFIED_FILES=${MODIFIED_FILES[@]}" >> $GITHUB_ENV
-  #     - name: Print files
-  #       run: echo $MODIFIED_FILES
-      
-  #     - name: Get the list of assessment tools
-  #       run: |
-  #         tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
-  #         tools=${tools%|}
-  #         echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
-      
-  #     - name: Print the list of assessment tools
-  #       run: echo "Required tools= ${{ env.ASSESSMENT_TOOLS }}"
-
-  #     - name: check for playbook files
-  #       run: |
-  #         check_flag=false
-  #         for file in $(echo ${{ env.MODIFIED_FILES }} | grep '\-playbook\.sh$');
-  #         do
-  #           prefix=$(echo $file | cut -d "-" -f 1)
-  #           tool_name=$(echo $file | cut -d "-" -f 2)
-  #           version=$(echo $file | cut -d "-" -f 3)
-  #           if [[ "$prefix" != "besman" ]]
-  #           then
-  #             echo -e "\e[31mMissing prefix \e[33mbesman\e[31m in \e[33m$file\e[0m"
-  #           fi
-            
-  #           if ! echo "$tool_name" | grep -E "${{ env.ASSESSMENT_TOOLS }}"
-  #           then
-  #             echo -e "\e[31mMissing tool name in \e[33m$file\e[0m"
-  #           fi
-            
-  #           if ! echo "$version" | grep -E '\b[0-9]+\.[0-9]+\.[0-9]+\b'"
-  #           then
-  #             echo -e "\e[31mMissing or Incorrect version in \e[33m$file\e[0m"
-  #           fi
-            
-  #         done
-
-  #     - name: check for steps files
-  #       run: |
-  #         check_flag=false
-  #         for file in $(echo "${{ env.MODIFIED_FILES }}" | grep '\-steps\.[^.]*$');
-  #         do
-  #           prefix=$(echo $file | cut -d "-" -f 1)
-  #           tool_name=$(echo $file | cut -d "-" -f 2)
-  #           version=$(echo $file | cut -d "-" -f 3)
-  #           if [[ "$prefix" != "besman" ]]
-  #           then
-  #             echo -e "\e[31mMissing prefix \e[33mbesman\e[31m in \e[33m$file\e[0m"
-  #           fi
-            
-  #           if ! echo "$tool_name" | grep -E "${{ env.ASSESSMENT_TOOLS }}"
-  #           then
-  #             echo -e "\e[31mMissing tool name in \e[33m$file\e[0m"
-  #           fi
-            
-  #           if ! echo "$version" | grep -E '\b[0-9]+\.[0-9]+\.[0-9]+\b'"
-  #           then
-  #             echo -e "\e[31mMissing or Incorrect version in \e[33m$file\e[0m"
-  #           fi
-            
-  #         done
+ 
