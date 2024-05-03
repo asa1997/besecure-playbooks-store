@@ -98,7 +98,6 @@ jobs:
     name: Checking for required functions
     runs-on: ubuntu-latest
     needs:
-      - File_Name_Standard
       - Required_files
 
     steps:
@@ -153,10 +152,11 @@ jobs:
                 function_flag=true
               fi
             done
+            if [[ $function_flag == true ]] 
+            then
+              exit 1
+            fi
           done
-          if [[ $function_flag == true ]] 
-          then
-            exit 1
-          fi
+
 
  
