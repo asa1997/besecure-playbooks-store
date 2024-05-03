@@ -27,10 +27,9 @@ jobs:
           echo "MODIFIED_FILES=${{ env.MODIFIED_FILES }}" >> $GITHUB_ENV
       
       - name: Filter added files
-        run: |
+        env:
           ADDED_FILES: ${{ steps.changed-files.outputs.added }}
-            # added_files=$(echo "${{ steps.changed-files.outputs.added }}" | tr '\n' ' ')
-            run: |
+        run: |
             for file in "${{ env.ADDED_FILES }}"; do
               echo "$file was changed"
             done
