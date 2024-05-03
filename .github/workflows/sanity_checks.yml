@@ -28,11 +28,16 @@ jobs:
       
       - name: Filter added files
         run: |
-            added_files=$(echo "${{ steps.changed-files.outputs.added }}" | tr '\n' ' ')
-            echo "Added files: $added_files"
-        
+          ADDED_FILES: ${{ steps.changed-files.outputs.added }}
+            # added_files=$(echo "${{ steps.changed-files.outputs.added }}" | tr '\n' ' ')
+            run: |
+            for file in "${{ env.ADDED_FILES }}"; do
+              echo "$file was changed"
+            done
+            echo "ADDED_FILES=${{ env.ADDED_FILES }}" >> $GITHUB_ENV        
+      
       - name: Print files
-        run: echo "${{ env.MODIFIED_FILES }}"
+        run: echo "${{ env.ADDED_FILES }}"
 
      
       - name: Get the list of assessment tools
