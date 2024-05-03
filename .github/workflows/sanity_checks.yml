@@ -72,7 +72,7 @@ jobs:
       
       - run: pwd
 
-      - run: ls .
+      - run: ls $HOME
 
       - name: Get the list of assessment tools
         run: |
