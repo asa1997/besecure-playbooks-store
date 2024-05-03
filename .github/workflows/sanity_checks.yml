@@ -72,6 +72,8 @@ jobs:
       
       - run: pwd
 
+      - run: ls .
+
       - name: Get the list of assessment tools
         run: |
           tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
