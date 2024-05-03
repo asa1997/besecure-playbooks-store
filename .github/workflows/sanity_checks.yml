@@ -32,7 +32,7 @@ jobs:
      
       - name: Get the list of assessment tools
         run: |
-          tools=$(cat .github/scripts/assessment_tools.txt | tr '\n' '|')
+          tools=$(cat /home/runner/work/besecure-playbooks-store/besecure-playbooks-store/.github/scripts/assessment_tools.txt | tr '\n' '|')
           tools=${tools%|}
           echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
 
