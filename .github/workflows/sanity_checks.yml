@@ -35,7 +35,8 @@ jobs:
           tools=$(cat /home/runner/work/besecure-playbooks-store/besecure-playbooks-store/.github/scripts/assessment_tools.txt | tr '\n' '|')
           tools=${tools%|}
           echo "ASSESSMENT_TOOLS=$(echo "$tools")" >> $GITHUB_ENV
-
+      
+      - run: echo "${{ env.ASSESSMENT_TOOLS }}"
       - name: Check if steps file present
         run: |
           steps_flag=true
