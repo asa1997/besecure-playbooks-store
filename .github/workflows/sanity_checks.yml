@@ -43,7 +43,7 @@ jobs:
           for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep ".*playbook.sh"); do
             tool_name=$(echo "$file" | cut -d "-" -f 2)
             version=$(echo "$file" | cut -d "-" -f 3)
-            if ! (echo "${{ env.MODIFIED_FILES }}" | grep "besman-$tool_name-$version-steps" && ls -R . | grep "besman-$tool_name-$version-steps"); then
+            if ! (echo "${{ env.MODIFIED_FILES }}" | grep "besman-$tool_name-$version-steps" || ls -R . | grep "besman-$tool_name-$version-steps"); then
               steps_flag=false
               echo -e "\e[31mCould not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
             fi
