@@ -18,16 +18,19 @@ jobs:
         uses: tj-actions/changed-files@v44
       
       - name: List all changed files
-        run: |
-          added_files=$(echo "${{ steps.changed-files.outputs.added }}" | tr '\n' ' ')
-          echo "Added files: $added_files"
-
-      
-      - name: List added files
         env:
           MODIFIED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-
+          for file in "${{ env.MODIFIED_FILES }}"; do
+            echo "$file was changed"
+          done
+          echo "MODIFIED_FILES=${{ env.MODIFIED_FILES }}" >> $GITHUB_ENV
+      
+      - name: Filter added files
+        run: |
+            added_files=$(echo "${{ steps.changed-files.outputs.added }}" | tr '\n' ' ')
+            echo "Added files: $added_files"
+        
       - name: Print files
         run: echo "${{ env.MODIFIED_FILES }}"
 
