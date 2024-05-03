@@ -84,7 +84,7 @@ jobs:
       - name: Check playbook naming convention
         run: |
           for file in $(echo "${{env.MODIFIED_FILES}}"); do
-
+          file_name=$(echo $file | cut -d "/" -f 2)
           if ! [[ $file =~ ^besman-(${{ env.ASSESSMENT_TOOLS }})-[0-9]+\.[0-9]+\.[0-9]+-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
           echo "The file $file does not match the specified condition."
                 exit 1
