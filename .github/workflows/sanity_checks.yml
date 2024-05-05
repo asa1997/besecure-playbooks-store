@@ -140,6 +140,7 @@ jobs:
           else
             metadata_json_path="/home/runner/work/besecure-playbooks-store/besecure-playbooks-store/playbook-metadata.json"
           fi
+          echo "metadata_json_path=$metadata_json_path"
           if test -f "$metadata_json_path"; then
             # Metadata file exists, proceed with reading it
 
