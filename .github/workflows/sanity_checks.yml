@@ -142,6 +142,7 @@ jobs:
           fi
           echo "metadata_json_path=$metadata_json_path"
           for file in "${{env.MODIFIED_FILES}}"; do
+            found=""
             if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
               name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
               version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
@@ -149,6 +150,8 @@ jobs:
               if [[ -z $found ]]; then
                   echo "Playbook $file with version $version not found in $metadata_json_path"
                   exit 1
+              else
+                echo "found"
               fi
             fi
           done
