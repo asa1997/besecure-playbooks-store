@@ -141,24 +141,18 @@ jobs:
             metadata_json_path="/home/runner/work/besecure-playbooks-store/besecure-playbooks-store/playbook-metadata.json"
           fi
           echo "metadata_json_path=$metadata_json_path"
-          if test -f "$metadata_json_path"; then
-            # Metadata file exists, proceed with reading it
-
-            for file in "${{env.MODIFIED_FILES}}"; do
-              if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
-                name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
-                version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
-                found=$(cat "$metadata_json_path" | jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)')
-                if [[ -z $found ]]; then
-                    echo "Playbook $file with version $version not found in $metadata_json_path"
-                    exit 1
-                fi
+          for file in "${{env.MODIFIED_FILES}}"; do
+            if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
+              name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
+              version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
+              found=$(cat "$metadata_json_path" | jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)')
+              if [[ -z $found ]]; then
+                  echo "Playbook $file with version $version not found in $metadata_json_path"
+                  exit 1
               fi
-            done
-          else
-            echo "Could not find metadata file @ $metadata_json_path"
-            exit 1
-          fi
+            fi
+          done
+
 
 
 
