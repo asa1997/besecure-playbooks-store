@@ -141,7 +141,8 @@ jobs:
             metadata_json_path="/home/runner/work/besecure-playbooks-store/besecure-playbooks-store/playbook-metadata.json"
           fi
           echo "metadata_json_path=$metadata_json_path"
-          for file in "${{env.MODIFIED_FILES}}"; do
+          for file in ${{env.MODIFIED_FILES}}; do
+            echo "file=$file"
             found=""
             if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
               echo "inside if"
