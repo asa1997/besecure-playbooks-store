@@ -37,18 +37,23 @@ jobs:
       - run: echo "${{ env.ASSESSMENT_TOOLS }}"
       - name: Check if steps file present
         run: |
+          steps_flag=false
           for file in "$(echo "${{ env.MODIFIED_FILES }}")"; do
             if (echo $file | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$')
             then
               tool_name=$(echo "$file" | cut -d "-" -f 2)
               version=$(echo "$file" | cut -d "-" -f 3)
               if ! (echo "${{ env.MODIFIED_FILES }}" | grep "besman-$tool_name-$version-steps" || ls -R . | grep "besman-$tool_name-$version-steps"); then
-                steps_flag=false
+                steps_flag=true
                 echo -e "\e[31mCould not find steps file for \e[33mbesman-$tool_name-$version-playbook.sh\e[31m"
-                exit 1
               fi
             fi
           done
+          if [[ $steps_flag == true ]]
+          then
+            exit 1
+          fi
+
   File_Name_Standard:
     name: Check for file naming convention
     runs-on: ubuntu-latest
@@ -84,15 +89,20 @@ jobs:
 
       - name: Check playbook naming convention
         run: |
+          file_flag=false
           for file in $(echo "${{env.MODIFIED_FILES}}"); do
             if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
               file_name=$(echo $file | cut -d "/" -f 2)
               if ! [[ $file_name =~ ^besman-(${{ env.ASSESSMENT_TOOLS }})-[0-9]+\.[0-9]+\.[0-9]+-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
-              echo "The file $file_name does not match the specified condition."
-                    exit 1
-                fi
+                echo "The file $file_name does not match standard naming convention."
+                file_flag=true
+              fi
             fi
           done
+          if [[ $file_flag == true ]]
+          then
+            exit 1
+          fi
   
   Check_if_metadata_update:
     name: Checking for playbook in metadata
