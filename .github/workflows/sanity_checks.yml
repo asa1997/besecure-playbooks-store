@@ -3,6 +3,8 @@ name: Pull Request Checks
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - /home/runner/work/besecure-playbooks-store/besecure-playbooks-store/playbooks
 
 jobs:
   Required_files:
