@@ -148,6 +148,7 @@ jobs:
             for file in "${{ env.MODIFIED_FILES }}"; do
               if [[ "$file" == "playbook-metadata.json" ]]
               then
+                echo "inside if"
                 metadata_json_path="$file"
                 cat "$metadata_json_path"
               fi
