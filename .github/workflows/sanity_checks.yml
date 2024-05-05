@@ -2,7 +2,7 @@ name: Pull Request Checks
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   Required_files:
@@ -142,9 +142,7 @@ jobs:
   #     - name: Check for metadata file
   #       run: |
   #         if echo "${{ env.MODIFIED_FILES }}" | grep -q "playbook-metadata.json"; then
-  #           for file in $(echo "${{ env.MODIFIED_FILES }}" | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep *playbook.sh); do
-
-  #           done
+  #           json_file_path
   #         fi  
           
   Required_functions:
