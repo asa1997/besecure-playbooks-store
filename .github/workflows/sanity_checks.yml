@@ -144,7 +144,7 @@ jobs:
           json_flag=false
           for file in ${{env.MODIFIED_FILES}}; do
             found=""
-            if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
+            if [[ $file =~ ^playbooks\/(.*)-(.*)-(.*)-playbook\.sh$ ]]; then
               name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
               version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
               found=$(cat "$metadata_json_path" | jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)')
