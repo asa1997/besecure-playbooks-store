@@ -144,9 +144,11 @@ jobs:
           for file in "${{env.MODIFIED_FILES}}"; do
             found=""
             if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
+              echo "inside if"
               name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
               version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
               found=$(cat "$metadata_json_path" | jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)')
+              echo "found=$found"
               if [[ -z $found ]]; then
                   echo "Playbook $file with version $version not found in $metadata_json_path"
                   exit 1
