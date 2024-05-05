@@ -48,7 +48,7 @@ jobs:
       - run: echo "${{ env.ASSESSMENT_TOOLS }}"
       - name: Check if steps file present
         run: |
-          for file in $(echo "${{ env.MODIFIED_FILES }})"; do
+          for file in "$(echo "${{ env.MODIFIED_FILES }}")"; do
             if (echo $file | grep -E "${{ env.ASSESSMENT_TOOLS }}" | grep '\-playbook\.sh$')
             then
               tool_name=$(echo "$file" | cut -d "-" -f 2)
