@@ -129,8 +129,8 @@ jobs:
 
       - name: Install jq
         run: |
-          apt-get update
-          apt-get install jq -y
+          sudo apt-get update
+          sudo apt-get install jq -y
       
       - name: Check for metadata file
         run: |
