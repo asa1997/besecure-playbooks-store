@@ -147,7 +147,7 @@ jobs:
           if echo "${{ env.MODIFIED_FILES }}" | grep -q "playbook-metadata.json"; then
             for file in "${{ env.MODIFIED_FILES }}"; do
               echo "$file"
-              if [[ $file == playbook\-metadata\.json ]]
+              if [[ $file == playbook-metadata.json ]]
               then
                 echo "inside if"
                 metadata_json_path="$file"
