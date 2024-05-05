@@ -155,11 +155,11 @@ jobs:
             metadata_json_path="/home/runner/work/besecure-playbooks-store/besecure-playbooks-store/playbook-metadata.json"
           fi
 
-          for file in $(echo "${{env.MODIFIED_FILES}}"); do
+          for file in "${{env.MODIFIED_FILES}}"; do
             if [[ $file =~ playbooks\/(.*)-(.*)-(.*)-((playbook\.sh)|(steps\.(sh|md|ipynb)))$ ]]; then
               name=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 2)
               version=$(echo $file | cut -d "/" -f 2 | cut -d "-" -f 3)
-              found=$(jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)' $metadata_json_path)
+              found=$(cat "$metadata_json_path" | jq --arg name "$name" --arg version "$version" '.playbooks[] | select(.name == $name and .version == $version)')
               if [[ -z $found ]]; then
                   echo "Playbook $file with version $version not found in $metadata_json_path"
                   exit 1
