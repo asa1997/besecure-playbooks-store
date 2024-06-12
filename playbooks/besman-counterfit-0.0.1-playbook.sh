@@ -40,27 +40,13 @@ function __besman_init() {
 
 function __besman_execute() {
     local duration
+
+    # Isolating the steps file for better use
     mkdir -p "$BESMAN_DIR/tmp/steps"
     __besman_echo_yellow "Launching steps file"
     cp "$BESMAN_STEPS_FILE_PATH" "$BESMAN_DIR/tmp/steps"
     SECONDS=0
     jupyter notebook "$BESMAN_DIR/tmp/steps"
-    # while read -p "Done with assessment?(y/n):" input 
-    # do
-    #     if [[ $input == "y" ]] 
-    #     then
-    #         if [[ -f $DETAILED_REPORT_PATH ]] 
-    #         then
-    #             break
-    #         else
-    #             __besman_echo_red "Could not find report @ $DETAILED_REPORT_PATH"
-    #             __besman_echo_no_colour ""
-    #             __besman_echo_yellow "Waiting" 
-    #         fi
-
-        
-    #     fi
-    # done
     
     duration=$SECONDS
 
@@ -72,6 +58,9 @@ function __besman_execute() {
         export PLAYBOOK_EXECUTION_STATUS=success
         return 0
     fi
+
+    rm -rf "$BESMAN_DIR/tmp/steps"
+
 }
 
 function __besman_prepare() {
