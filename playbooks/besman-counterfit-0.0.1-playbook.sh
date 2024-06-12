@@ -21,6 +21,10 @@ function __besman_init() {
         fi
     done
 
+      #TODO
+    # Check if counterfit is installed, anaconda is installed etc.
+    # If not present set the variable "flag" as "true"
+
     if [[ $flag == true ]]; then
         return 1
     else
@@ -29,10 +33,13 @@ function __besman_init() {
         __besman_fetch_steps_file "$steps_file_name" || return 1
         return 0
     fi
+
+  
+
 }
 
 function __besman_execute() {
-    local duration input
+    local duration
     mkdir -p "$BESMAN_DIR/tmp/steps"
     __besman_echo_yellow "Launching steps file"
     cp "$BESMAN_STEPS_FILE_PATH" "$BESMAN_DIR/tmp/steps"
@@ -72,7 +79,11 @@ function __besman_prepare() {
     EXECUTION_TIMESTAMP=$(date)
     export EXECUTION_TIMESTAMP
 
+    #TODO
+    # Move the report from counterfit folder to $DETAILED_REPORT_PATH
+
     [[ ! -f $DETAILED_REPORT_PATH ]] && __besman_echo_red "Could not find report @ $DETAILED_REPORT_PATH" && return 1
+
     __besman_generate_osar
 }
 
