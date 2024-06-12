@@ -23,6 +23,7 @@ function __besman_init() {
 
       #TODO
     # Check if counterfit is installed, anaconda is installed etc.
+    # Check for pre-requisites
     # If not present set the variable "flag" as "true"
 
     if [[ $flag == true ]]; then
