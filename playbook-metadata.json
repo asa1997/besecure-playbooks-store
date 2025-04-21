@@ -24,8 +24,8 @@
       "name": "criticality_score",
       "version": "0.0.1",
       "type": "tool",
-      "intent": "PIA",
-      "description": "Used to calculate the criticality score of a project based on its attributes and usage.",
+      "intent": "LLMSecPromptInjection",
+      "description": "Tests how the LLM handles prompt injection attacks",
       "author": {
         "name": "Be-Secure",
         "type": "Organization"
