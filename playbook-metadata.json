@@ -24,6 +24,8 @@
       "name": "criticality_score",
       "version": "0.0.1",
       "type": "tool",
+      "intent": "PIA",
+      "description": "This playbook is used to calculate the criticality score of a software component based on its attributes and usage.",
       "author": {
         "name": "Be-Secure",
         "type": "Organization"
