@@ -107,6 +107,27 @@
       "detailed_report_path": "STRING"
     },
     {
+      "name": "cyberseceval",
+      "version": "0.0.1",
+      "intent": "LLMSecAutocomplete",
+      "description": "Measure how often an LLM suggests insecure coding practices in autocomplete contexts, where the LLM predicts subsequent code based on preceding code.",
+      "type": "tool",
+      "author": {
+        "name": "Be-Secure",
+        "type": "Organization"
+      },
+      "date_of_creation": "2024-05-06T14:52:02",
+      "last_update_date": "2024-05-06T14:52:02",
+      "last_execution": {
+        "name": "Be-Secure",
+        "type": "Organization",
+        "status": "Success",
+        "timestamp": "2024-05-06T14:52:02",
+        "environment": "fastjson-RT-env"
+      },
+      "detailed_report_path": "STRING"
+    },
+    {
       "name": "watchtower",
       "version": "0.0.1",
       "type": "tool",
