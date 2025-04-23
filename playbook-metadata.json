@@ -88,7 +88,7 @@
     {
       "name": "cyberseceval",
       "version": "0.0.1",
-      "intent": "LLMSecFRR",
+      "intent": "LLMSecFalseRefusal Rate",
       "description": "These tests measure how often an LLM incorrectly refuses a borderline but essentially benign query, due to misinterpreting the prompt as a malicious request.",
       "type": "tool",
       "author": {
