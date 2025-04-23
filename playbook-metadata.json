@@ -68,7 +68,7 @@
       "name": "scorecard",
       "version": "0.0.1",
       "intent": "RIP",
-      "description": "Scorecard is an automated tool that assesses a number of important heuristics (\"checks\") associated with software security and assigns each check a score of 0-10. Use these scores to understand specific areas to improve in order to strengthen the security posture of your project.",
+      "description": "Scorecard is an automated tool that assesses a number of important heuristics associated with software security and assigns each check a score of 0-10. Use these scores to understand specific areas to improve in order to strengthen the security posture of your project.",
       "type": "tool",
       "author": {
         "name": "Be-Secure",
