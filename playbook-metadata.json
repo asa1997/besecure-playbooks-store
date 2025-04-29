@@ -130,8 +130,8 @@
     {
       "name": "watchtower",
       "version": "0.0.1",
-      "intent": "DAST",
-      "description": "Performs attack on models",
+      "intent": "SAST",
+      "description": "Performs SAST analysis on model repos",
       "type": "tool",
       "author": {
         "name": "Be-Secure",
@@ -151,6 +151,8 @@
     {
       "name": "counterfit",
       "version": "0.0.1",
+      "intent": "DAST",
+      "description": "Performs DAST analysis on model repos",
       "type": "tool",
       "author": {
         "name": "Be-Secure",
