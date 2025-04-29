@@ -130,6 +130,8 @@
     {
       "name": "watchtower",
       "version": "0.0.1",
+      "intent": "DAST",
+      "description": "Performs attack on models",
       "type": "tool",
       "author": {
         "name": "Be-Secure",
