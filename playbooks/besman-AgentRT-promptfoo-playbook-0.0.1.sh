@@ -4,7 +4,7 @@ function __besman_init() {
     __besman_echo_white "initialising"
     export ASSESSMENT_TOOL_NAME="promptfoo"
     export ASSESSMENT_TOOL_TYPE="agentrt"
-    export ASSESSMENT_TOOL_VERSION="9.9.4"
+    export ASSESSMENT_TOOL_VERSION="0.118.17"
     export ASSESSMENT_TOOL_PLAYBOOK="besman-$ASSESSMENT_TOOL_TYPE-$ASSESSMENT_TOOL_NAME-playbook-0.0.1.sh"
 
     local steps_file_name="besman-$ASSESSMENT_TOOL_TYPE-$ASSESSMENT_TOOL_NAME-steps-0.0.1.ipynb"
